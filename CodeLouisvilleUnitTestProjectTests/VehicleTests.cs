@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 
 namespace CodeLouisvilleUnitTestProjectTests
 {
-    public class VehicleTests
+    public class VehicleTestsShould
     {
 
         //Verify the parameterless constructor successfully creates a new
