@@ -1,4 +1,8 @@
-﻿namespace CodeLouisvilleUnitTestProject
+﻿using System.Runtime.CompilerServices;
+
+//[assembly: InternalsVisibleTo("VehicleTests.cs")]
+
+namespace CodeLouisvilleUnitTestProject
 {
     public class Vehicle
     {
@@ -104,7 +108,7 @@
             }
             return statusString;
         }
-
+        //make public?
         protected async Task ChangeTireAsync()
         {
             if (!_hasFlatTire)

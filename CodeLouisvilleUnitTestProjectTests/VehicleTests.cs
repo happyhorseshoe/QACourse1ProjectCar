@@ -15,10 +15,19 @@ namespace CodeLouisvilleUnitTestProjectTests
         public void VehicleParameterlessConstructorTest()
         {
             //arrange
-            throw new NotImplementedException();
+            Vehicle vehicle = new Vehicle();
+
+            //throw new NotImplementedException();
             //act
 
             //assert
+            vehicle.Should().Be(vehicle);
+            vehicle.NumberOfTires.Should().Be(0);
+            vehicle.GasTankCapacity.Should().Be(0);
+            vehicle.Make.Should().Be("");
+            vehicle.Model.Should().Be("");
+            vehicle.MilesPerGallon.Should().Be(0);
+
 
         }
 
@@ -29,11 +38,18 @@ namespace CodeLouisvilleUnitTestProjectTests
         public void VehicleConstructorTest()
         {
             //arrange
-            throw new NotImplementedException();
+            Vehicle vehicle = new(4, 10, "Lexus", "RX", 30);
+
+            //throw new NotImplementedException();
             //act
 
             //assert
-
+            vehicle.Should().Be(vehicle);
+            vehicle.NumberOfTires.Should().Be(4);
+            vehicle.GasTankCapacity.Should().Be(10);
+            vehicle.Make.Should().Be("Lexus");
+            vehicle.Model.Should().Be("RX");
+            vehicle.MilesPerGallon.Should().Be(0);
         }
 
         //Verify that the parameterless AddGas method fills the gas tank
@@ -42,11 +58,15 @@ namespace CodeLouisvilleUnitTestProjectTests
         public void AddGasParameterlessFillsGasToMax()
         {
             //arrange
-            throw new NotImplementedException();
+            Vehicle vehicle = new Vehicle();
+
+            //throw new NotImplementedException();
+
             //act
-
+            vehicle.AddGas();
             //assert
-
+            vehicle.GasLevel.Should().Be("100%");
+            
         }
 
         //Verify that the AddGas method with a parameter adds the
@@ -55,11 +75,12 @@ namespace CodeLouisvilleUnitTestProjectTests
         public void AddGasWithParameterAddsSuppliedAmountOfGas()
         {
             //arrange
-            throw new NotImplementedException();
+            Vehicle vehicle = new(4, 10, "Lexus", "RX", 30);
+
             //act
-
+            vehicle.AddGas(5);
             //assert
-
+            Assert.Equal(5, vehicle.GasTankCapacity);
         }
 
         //Verify that the AddGas method with a parameter will throw
@@ -68,10 +89,13 @@ namespace CodeLouisvilleUnitTestProjectTests
         public void AddingTooMuchGasThrowsGasOverflowException()
         {
             //arrange
-            throw new NotImplementedException();
+            Vehicle vehicle = new Vehicle(4, 10, "Lexus", "RX", 30);
             //act
-
+            Action act = () => vehicle.AddGas(15).Should();
             //assert
+            _ = act.Should().Throw<GasOverfillException>().WithMessage($"Unable to add 15 gallons to tank " +
+                  $"because it would exceed the capacity of 10 gallons");
+                
 
         }
 
@@ -79,15 +103,20 @@ namespace CodeLouisvilleUnitTestProjectTests
         //property returns the correct percentage when the gas level is
         //at 0%, 25%, 50%, 75%, and 100%.
         [Theory]
-        [InlineData("MysteryParamValue")]
-        public void GasLevelPercentageIsCorrectForAmountOfGas(params object[] yourParamsHere)
+        [InlineData("0%",0)]
+        [InlineData("25%", 2.5)]
+        [InlineData("50%", 5)]
+        [InlineData("75%", 7.5)]
+        [InlineData("100%", 10)]
+        public void GasLevelPercentageIsCorrectForAmountOfGas(string percent, int gasToAdd)
         {
             //arrange
-            throw new NotImplementedException();
+            Vehicle vehicle = new Vehicle(4, 10, "Lexus", "RX", 30);
             //act
+            vehicle.AddGas(gasToAdd);
 
             //assert
-
+            vehicle.GasLevel.Should().Be(percent);
         }
 
         /*
@@ -143,9 +172,9 @@ namespace CodeLouisvilleUnitTestProjectTests
         public async Task ChangeTireWithoutFlatTest()
         {
             //arrange
-            throw new NotImplementedException();
+            Vehicle vehicle = new Vehicle();
             //act
-
+            Vehicle.ChangeTireAsync();
             //assert
 
         }
