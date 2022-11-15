@@ -49,7 +49,7 @@ namespace CodeLouisvilleUnitTestProjectTests
             vehicle.GasTankCapacity.Should().Be(10);
             vehicle.Make.Should().Be("Lexus");
             vehicle.Model.Should().Be("RX");
-            vehicle.MilesPerGallon.Should().Be(0);
+            vehicle.MilesPerGallon.Should().Be(30);
         }
 
         //Verify that the parameterless AddGas method fills the gas tank
@@ -58,15 +58,17 @@ namespace CodeLouisvilleUnitTestProjectTests
         public void AddGasParameterlessFillsGasToMax()
         {
             //arrange
-            Vehicle vehicle = new Vehicle();
+            Vehicle vehicle = new Vehicle(4, 10, "Lexus", "RX", 30);
 
             //throw new NotImplementedException();
 
             //act
+            _ = vehicle.Drive(30);
             vehicle.AddGas();
+            
             //assert
             vehicle.GasLevel.Should().Be("100%");
-            
+
         }
 
         //Verify that the AddGas method with a parameter adds the
@@ -78,9 +80,9 @@ namespace CodeLouisvilleUnitTestProjectTests
             Vehicle vehicle = new(4, 10, "Lexus", "RX", 30);
 
             //act
-            vehicle.AddGas(5);
+            vehicle.AddGas(10);
             //assert
-            Assert.Equal(5, vehicle.GasTankCapacity);
+            Assert.Equal(10, vehicle.GasTankCapacity);
         }
 
         //Verify that the AddGas method with a parameter will throw
@@ -95,7 +97,7 @@ namespace CodeLouisvilleUnitTestProjectTests
             //assert
             _ = act.Should().Throw<GasOverfillException>().WithMessage($"Unable to add 15 gallons to tank " +
                   $"because it would exceed the capacity of 10 gallons");
-                
+
 
         }
 
@@ -103,14 +105,15 @@ namespace CodeLouisvilleUnitTestProjectTests
         //property returns the correct percentage when the gas level is
         //at 0%, 25%, 50%, 75%, and 100%.
         [Theory]
-        [InlineData("0%",0)]
+        [InlineData("0%", 0)]
         [InlineData("25%", 2.5)]
         [InlineData("50%", 5)]
         [InlineData("75%", 7.5)]
         [InlineData("100%", 10)]
-        public void GasLevelPercentageIsCorrectForAmountOfGas(string percent, int gasToAdd)
+        public void GasLevelPercentageIsCorrectForAmountOfGas(string percent, float gasToAdd)
         {
             //arrange
+
             Vehicle vehicle = new Vehicle(4, 10, "Lexus", "RX", 30);
             //act
             vehicle.AddGas(gasToAdd);
@@ -141,27 +144,101 @@ namespace CodeLouisvilleUnitTestProjectTests
          *      is correct, and that the total mileage on the vehicle is 
          *      correct. Verify that the status reports the car is out of gas.
         */
-        [Theory]
-        [InlineData("MysteryParamValue")]
-        public void DriveNegativeTests(params object[] yourParamsHere)
+
+        [Fact]        //a.
+        public void GasLevelEmpty()
         {
             //arrange
-            throw new NotImplementedException();
+            Vehicle vehicle = new Vehicle(4, 10, "Lexus", "RX", 30);
             //act
-
+            Action act = () => vehicle.AddGas(0);
             //assert
-
+            vehicle.MilesRemaining.Should().Be(0, because: "Cannot drive, out of gas.");
         }
 
-        [Theory]
-        [InlineData("MysteryParamValue")]
-        public void DrivePositiveTests(params object[] yourParamsHere)
+        //b.Flat Tire  Attempting to drive a car with a flat tire returns the status string “Cannot drive due to flat tire.”.
+
+        [Fact]
+        public void DriveWithFlatTire()
         {
             //arrange
-            throw new NotImplementedException();
+            Vehicle vehicle = new Vehicle(4, 10, "Lexus", "RX", 30);
             //act
-
+            vehicle.AddGas();
+            vehicle.FlatTireTest();
+            string drive = vehicle.Drive(5);
             //assert
+            drive.Should().Be("Cannot drive due to flat tire.");
+
+
+        }
+        /*Drive the car c.) 10 miles. d.)100miles e.) out of gas (300miles) Verify that the correct amount
+         * of gas was used, that the correct distance was traveled,
+         *      that GasLevel is correct, that MilesRemaining is correct, 
+         *      and that the total mileage on the vehicle is correct.*/
+
+        /* [Theory]
+         [InlineData(10,.333, "96.6%", 290, 10)]
+         [InlineData(100,3.33,"66.7%",200,100)]
+         [InlineData(300, 10)]
+         public void DrivePositiveTestsCorrect(double milesTraveled, double gasUsed,string percent, double milesLeft, double totalMileage )
+         {
+             //arrange
+             Vehicle vehicle= new Vehicle(4, 10, "Lexus", "RX", 30);
+             vehicle.Drive(gasUsed);
+             //act
+
+             //assert
+             vehicle.Mileage.Should().Be(milesTraveled);*/
+
+        /*Drive the car c.) 10 miles. d.)100miles e.) out of gas (300miles) Verify that the correct amount
+         * of gas was used, that the correct distance was traveled,
+         *      that GasLevel is correct, that MilesRemaining is correct, 
+         *      and that the total mileage on the vehicle is correct.*/
+
+        [Fact]     //c//
+        public void VerifyAmountsBasedOnDistance10()
+        {
+            //arrange
+            Vehicle vehicle = new Vehicle(4, 10, "Lexus", "RX", 30);
+            //act
+            vehicle.AddGas();
+            string amount = vehicle.Drive(10);
+            //assert
+            amount.Should().Be("Drove 10 miles using 0.33 gallons of gas.");
+            vehicle.GasLevel.Should().Be("96.66666666666666%");
+            vehicle.MilesRemaining.Should().Be(290);
+            vehicle.Mileage.Should().Be(10);
+
+        }
+        [Fact] //d//
+        public void VerifyAmountsBasedOnDistance100()
+        {
+            //arrange
+            Vehicle vehicle = new Vehicle(4, 10, "Lexus", "RX", 30);
+            //act
+            vehicle.AddGas();
+            string amount = vehicle.Drive(100);
+            //assert
+            amount.Should().Be("Drove 100 miles using 3.33 gallons of gas.");
+            vehicle.GasLevel.Should().Be("66.66666666666666%");
+            vehicle.MilesRemaining.Should().Be(199.99999999999997);
+            vehicle.Mileage.Should().Be(100);
+
+        }
+        [Fact]  //e//
+        public void VerifyAmountsBasedOnDistance300()
+        {
+            //arrange
+            Vehicle vehicle = new Vehicle(4, 10, "Lexus", "RX", 30);
+            //act
+            vehicle.AddGas();
+            string amounts = vehicle.Drive(300);
+            //assert
+            amounts.Should().Be("Drove 300 miles, then ran out of gas.");
+            vehicle.GasLevel.Should().Be("0%");
+            vehicle.MilesRemaining.Should().Be(0);
+            vehicle.Mileage.Should().Be(300);
 
         }
 
@@ -172,11 +249,13 @@ namespace CodeLouisvilleUnitTestProjectTests
         public async Task ChangeTireWithoutFlatTest()
         {
             //arrange
-            Vehicle vehicle = new Vehicle();
+            Vehicle vehicle = new Vehicle(4, 10, "Lexus", "RX", 30);
             //act
-            Vehicle.ChangeTireAsync();
-            //assert
 
+            Func<Task> noTire = async () => { await vehicle.ChangeTireAsyncTest(); };
+
+            //assert
+            await noTire.Should().ThrowAsync<NoTireToChangeException>();
         }
 
         //Verify that ChangeTireAsync can successfully
@@ -185,14 +264,18 @@ namespace CodeLouisvilleUnitTestProjectTests
         public async Task ChangeTireSuccessfulTest()
         {
             //arrange
-            throw new NotImplementedException();
+            Vehicle vehicle = new Vehicle(4, 10, "Lexus", "RX", 30);
             //act
-
+            vehicle.FlatTireTest();
+            await vehicle.ChangeTireAsyncTest();
             //assert
+            vehicle.HasFlatTire.Should().Be(false);
 
         }
+    }
+}
 
-        //BONUS: Write a unit test that verifies that a flat
+        /*BONUS: Write a unit test that verifies that a flat
         //tire will occur after a certain number of miles.
         [Theory]
         [InlineData("MysteryParamValue")]
@@ -206,4 +289,4 @@ namespace CodeLouisvilleUnitTestProjectTests
 
         }
     }
-}
+}*/

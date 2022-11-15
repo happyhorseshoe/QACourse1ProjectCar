@@ -15,6 +15,7 @@ namespace CodeLouisvilleUnitTestProject
         public string GasLevel => $"{_gasRemaining / GasTankCapacity * 100}%";
         public double MilesRemaining => _gasRemaining * MilesPerGallon;
         public double Mileage => _mileage;
+        public bool HasFlatTire => _hasFlatTire;
         #endregion
 
         #region Private Fields
@@ -108,7 +109,16 @@ namespace CodeLouisvilleUnitTestProject
             }
             return statusString;
         }
-        //make public?
+        //added by tester//
+        public void FlatTireTest()
+        {
+            _hasFlatTire = true;
+        }
+        public async Task ChangeTireAsyncTest()
+        {
+            await ChangeTireAsync();
+        }
+
         protected async Task ChangeTireAsync()
         {
             if (!_hasFlatTire)
@@ -119,7 +129,7 @@ namespace CodeLouisvilleUnitTestProject
                 _hasFlatTire = false;
             }
         }
-
+       
         /// <summary>
         /// Determine whether or not a flat tire after driving milesDrive miles based on flat tire chance and randomness
         /// </summary>
