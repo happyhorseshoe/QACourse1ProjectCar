@@ -1,16 +1,20 @@
-﻿namespace CodeLouisvilleUnitTestProject
+﻿using System.Linq;
+
+namespace CodeLouisvilleUnitTestProject
 {
-    public class SemiTruck : Vehicle
+    public class SemiTruck : Vehicle                          //inherits from Vehicle
     {
-        public List<CargoItem> Cargo { get; private set; }
+        public List<CargoItem> Cargo { get; private set; }  //Cargo can be retrieved throughout the application
+                                                            //but only set from the class containing it
 
         /// <summary>
         /// Creates a new SemiTruck that always has 18 Tires
         /// </summary>
+
         public SemiTruck()
         {
-            //YOUR CODE HERE: 
-            throw new NotImplementedException();
+            NumberOfTires = 18;
+            Cargo = new List<CargoItem>();
         }
 
         /// <summary>
@@ -20,7 +24,7 @@
         public void LoadCargo(CargoItem item)
         {
             //YOUR CODE HERE
-            throw new NotImplementedException();
+            Cargo.Add(item);
         }
             
         /// <summary>
@@ -31,8 +35,18 @@
         /// <exception cref="ArgumentException">Thrown if no CargoItem in the Cargo matches the passed name</exception>
         public CargoItem UnloadCargo(string name)
         {
-            //YOUR CODE HERE
-            throw new NotImplementedException();
+            var item = Cargo.FirstOrDefault(x => x.Name == name);
+           
+            
+            if (name != null)
+            {
+               Cargo.Remove(item);
+                return item;
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
         }
 
         /// <summary>
@@ -40,10 +54,9 @@
         /// </summary>
         /// <param name="name">The name to match</param>
         /// <returns>A List of CargoItems with the exact name passed</returns>
-        public List<CargoItem> GetCargoItemsByName(string name)
+        public List<CargoItem> GetCargoItemsByName(string name)       //not Where b/c empty list needs to return
         {
-            //YOUR CODE HERE
-            throw new NotImplementedException();
+            return Cargo.FindAll(x => x.Name == name).ToList();
         }
 
         /// <summary>
@@ -53,18 +66,16 @@
         /// <returns>A List of CargoItems with a description containing the passed description</returns>
         public List<CargoItem> GetCargoItemsByPartialDescription(string description)
         {
-            //YOUR CODE HERE
-            throw new NotImplementedException();
+            return GetCargoItemsByPartialDescription(description).ToList();
         }
 
         /// <summary>
         /// Get the number of total items in the Cargo.
         /// </summary>
         /// <returns>An integer representing the sum of all Quantity properties on all CargoItems</returns>
-        public int GetTotalNumberOfItems()
+        public int GetTotalNumberOfItems()         //sums all quantity on each item and all items is this enough? groupby
         {
-            //YOUR CODE HERE
-            throw new NotImplementedException();
+            return Cargo.Sum(x => x.Quantity);
         }
     }
 }

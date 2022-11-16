@@ -21,12 +21,15 @@ namespace CodeLouisvilleUnitTestProjectTests
             //act
 
             //assert
-            vehicle.Should().Be(vehicle);
-            vehicle.NumberOfTires.Should().Be(0);
-            vehicle.GasTankCapacity.Should().Be(0);
-            vehicle.Make.Should().Be("");
-            vehicle.Model.Should().Be("");
-            vehicle.MilesPerGallon.Should().Be(0);
+            using (new AssertionScope())
+            {
+                vehicle.Should().Be(vehicle);
+                vehicle.NumberOfTires.Should().Be(0);
+                vehicle.GasTankCapacity.Should().Be(0);
+                vehicle.Make.Should().Be("");
+                vehicle.Model.Should().Be("");
+                vehicle.MilesPerGallon.Should().Be(0);
+            }
 
 
         }
@@ -44,12 +47,15 @@ namespace CodeLouisvilleUnitTestProjectTests
             //act
 
             //assert
-            vehicle.Should().Be(vehicle);
-            vehicle.NumberOfTires.Should().Be(4);
-            vehicle.GasTankCapacity.Should().Be(10);
-            vehicle.Make.Should().Be("Lexus");
-            vehicle.Model.Should().Be("RX");
-            vehicle.MilesPerGallon.Should().Be(30);
+            using (new AssertionScope())
+            {
+                vehicle.Should().Be(vehicle);
+                vehicle.NumberOfTires.Should().Be(4);
+                vehicle.GasTankCapacity.Should().Be(10);
+                vehicle.Make.Should().Be("Lexus");
+                vehicle.Model.Should().Be("RX");
+                vehicle.MilesPerGallon.Should().Be(30);
+            }
         }
 
         //Verify that the parameterless AddGas method fills the gas tank
@@ -205,10 +211,13 @@ namespace CodeLouisvilleUnitTestProjectTests
             vehicle.AddGas();
             string amount = vehicle.Drive(10);
             //assert
-            amount.Should().Be("Drove 10 miles using 0.33 gallons of gas.");
-            vehicle.GasLevel.Should().Be("96.66666666666666%");
-            vehicle.MilesRemaining.Should().Be(290);
-            vehicle.Mileage.Should().Be(10);
+            using (new AssertionScope())
+            {
+                amount.Should().Be("Drove 10 miles using 0.33 gallons of gas.");
+                vehicle.GasLevel.Should().Be("96.66666666666666%");
+                vehicle.MilesRemaining.Should().Be(290);
+                vehicle.Mileage.Should().Be(10);
+            }
 
         }
         [Fact] //d//
@@ -220,10 +229,13 @@ namespace CodeLouisvilleUnitTestProjectTests
             vehicle.AddGas();
             string amount = vehicle.Drive(100);
             //assert
-            amount.Should().Be("Drove 100 miles using 3.33 gallons of gas.");
-            vehicle.GasLevel.Should().Be("66.66666666666666%");
-            vehicle.MilesRemaining.Should().Be(199.99999999999997);
-            vehicle.Mileage.Should().Be(100);
+            using (new AssertionScope())
+            {
+                amount.Should().Be("Drove 100 miles using 3.33 gallons of gas.");
+                vehicle.GasLevel.Should().Be("66.66666666666666%");
+                vehicle.MilesRemaining.Should().Be(199.99999999999997);
+                vehicle.Mileage.Should().Be(100);
+            }
 
         }
         [Fact]  //e//
@@ -235,11 +247,13 @@ namespace CodeLouisvilleUnitTestProjectTests
             vehicle.AddGas();
             string amounts = vehicle.Drive(300);
             //assert
-            amounts.Should().Be("Drove 300 miles, then ran out of gas.");
-            vehicle.GasLevel.Should().Be("0%");
-            vehicle.MilesRemaining.Should().Be(0);
-            vehicle.Mileage.Should().Be(300);
-
+            using (new AssertionScope())
+            {
+                amounts.Should().Be("Drove 300 miles, then ran out of gas.");
+                vehicle.GasLevel.Should().Be("0%");
+                vehicle.MilesRemaining.Should().Be(0);
+                vehicle.Mileage.Should().Be(300);
+            }
         }
 
         //Verify that attempting to change a flat tire using

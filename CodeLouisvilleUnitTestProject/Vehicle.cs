@@ -15,7 +15,7 @@ namespace CodeLouisvilleUnitTestProject
         public string GasLevel => $"{_gasRemaining / GasTankCapacity * 100}%";
         public double MilesRemaining => _gasRemaining * MilesPerGallon;
         public double Mileage => _mileage;
-        public bool HasFlatTire => _hasFlatTire;
+        public bool HasFlatTire => HasFlatTire;
         #endregion
 
         #region Private Fields
