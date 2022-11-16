@@ -35,15 +35,16 @@ namespace CodeLouisvilleUnitTestProjectTests
             //CargoItem in the Cargo and also that the count of Cargo increased to 1.
 
             [Fact]
+
             public void LoadCargoTest()
             {
                 //arrange
-              CargoItem crate = new CargoItem();
-              SemiTruck semiTruck = new SemiTruck();
-                
+                CargoItem crate = new CargoItem();
+                SemiTruck semiTruck = new SemiTruck();
+
 
                 //act
-              semiTruck.LoadCargo(crate);
+                semiTruck.LoadCargo(crate);
 
                 //assert
                 using (new AssertionScope())
@@ -54,98 +55,98 @@ namespace CodeLouisvilleUnitTestProjectTests
                 }
 
             }
-        
 
-        //Verify that unloading a  cargo item that is in the Cargo does
-        //remove it from the Cargo and return the matching CargoItem
-        [Fact]
-        public void UnloadCargoWithValidCargoTest()
-        {
+
+            //Verify that unloading a  cargo item that is in the Cargo does
+            //remove it from the Cargo and return the matching CargoItem
+            [Fact]
+            public void UnloadCargoWithValidCargoTest()
+            {
                 //arrange
-                SemiTruck semiTruck = new SemiTruck();
+                SemiTruck semTrucki = new SemiTruck();
                 CargoItem crate = new CargoItem();
-            //act
 
-            //assert
+                //act
+                semiTruck.Cargo.Remove(crate);
 
-        }
+                //assert
+                semiTruck.Cargo.Should().NotContain(crate);
 
-        //Verify that attempting to unload a CargoItem that does not
-        //appear in the Cargo throws a System.ArgumentException
-        [Fact]
-        public void UnloadCargoWithInvalidCargoTest()
-        {
-            //arrange
-            throw new NotImplementedException();
-            //act
 
-            //assert
+            }
+            //Verify that attempting to unload a CargoItem that does not
+            //appear in the Cargo throws a System.ArgumentException
+            [Fact]
+            public void UnloadCargoWithInvalidCargoTest()
+            {
+                //arrange
+                SemiTruck semTrucki = new SemiTruck();
+                CargoItem crate = new CargoItem();
+                //act
+                Action action = () => semTrucki.UnloadCargo("m");
+                //assert
+                action.Should().Throw<InvalidOperationException>();        //this isn't right. why??
+            }
 
-        }
+            //Verify that getting cargo items by name returns all items
+            //in Cargo with that name.
+            [Fact]
+            public void GetCargoItemsByNameWithValidName()
+            {
+                var item1 = new CargoItem()     
 
-        //Verify that getting cargo items by name returns all items
-        //in Cargo with that name.
-        [Fact]
-        public void GetCargoItemsByNameWithValidName()
-        {
-            //arrange
-            throw new NotImplementedException();
-            //act
+            }
 
-            //assert
+            //Verify that searching the Carto list for an item that does not
+            //exist returns an empty list
+            [Fact]
+            public void GetCargoItemsByNameWithInvalidName()
+            {
+                //arrange
+                throw new NotImplementedException();
+                //act
 
-        }
+                //assert
 
-        //Verify that searching the Carto list for an item that does not
-        //exist returns an empty list
-        [Fact]
-        public void GetCargoItemsByNameWithInvalidName()
-        {
-            //arrange
-            throw new NotImplementedException();
-            //act
+            }
 
-            //assert
+            //Verify that searching the Cargo list by description for an item
+            //that does exist returns all matched items that contain that description.
+            [Fact]
+            public void GetCargoItemsByPartialDescriptionWithValidDescription()
+            {
+                //arrange
+                throw new NotImplementedException();
+                //act
 
-        }
+                //assert
 
-        //Verify that searching the Cargo list by description for an item
-        //that does exist returns all matched items that contain that description.
-        [Fact]
-        public void GetCargoItemsByPartialDescriptionWithValidDescription()
-        {
-            //arrange
-            throw new NotImplementedException();
-            //act
+            }
 
-            //assert
+            //Verify that searching the Carto list by description for an item
+            //that does not exist returns an empty list
+            [Fact]
+            public void GetCargoItemsByPartialDescriptionWithInvalidDescription()
+            {
+                //arrange
+                throw new NotImplementedException();
+                //act
 
-        }
+                //assert
 
-        //Verify that searching the Carto list by description for an item
-        //that does not exist returns an empty list
-        [Fact]
-        public void GetCargoItemsByPartialDescriptionWithInvalidDescription()
-        {
-            //arrange
-            throw new NotImplementedException();
-            //act
+            }
 
-            //assert
+            //Verify that the method returns the sum of all quantities of all
+            //items in the Cargo
+            [Fact]
+            public void GetTotalNumberOfItemsReturnsSumOfAllQuantities()
+            {
+                //arrange 
+                throw new NotImplementedException();
+                //act
 
-        }
+                //assert
 
-        //Verify that the method returns the sum of all quantities of all
-        //items in the Cargo
-        [Fact]
-        public void GetTotalNumberOfItemsReturnsSumOfAllQuantities()
-        {
-            //arrange
-            throw new NotImplementedException();
-            //act
-
-            //assert
-
+            }
         }
     }
-}
