@@ -15,10 +15,30 @@ namespace CodeLouisvilleUnitTestProject
 {
     public class Car : Vehicle
     {
-        private HttpClient _client = new HttpClient()
-            {
-                BaseAddress = new Uri("https://vpic.nhtsa.dot/gov/api/")
-            };
+        private HttpClient client = new HttpClient()
+        {
+            BaseAddress = new Uri("https://vpic.nhtsa.dot/gov/api/")
+        };
+        public int NumberOfPassengers { get; private set; }
 
+        public Car()
+            : this(0, "", "", 0)
+        {
+        }
+
+        public Car(double gasTankCapacity,
+                   string make,
+                   string model,
+                   double milesPerGallon)
+            : base(4, gasTankCapacity, make, model, milesPerGallon);
+        {
+        }
+        
+
+        
     }
+
 }
+        
+    
+

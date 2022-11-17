@@ -249,7 +249,7 @@ namespace CodeLouisvilleUnitTestProjectTests
             //assert
             using (new AssertionScope())
             {
-                amounts.Should().Be("Drove 300 miles, then ran out of gas.");
+                amounts.Should().Be("Drove 300 miles, then ran out of gas.");  //every other test it wants flat tire included??
                 vehicle.GasLevel.Should().Be("0%");
                 vehicle.MilesRemaining.Should().Be(0);
                 vehicle.Mileage.Should().Be(300);

@@ -25,7 +25,7 @@ namespace CodeLouisvilleUnitTestProjectTests
             {
                 semiTruck.Should().BeOfType<SemiTruck>();
                 semiTruck.Should().BeAssignableTo<Vehicle>();
-                semiTruck.NumberOfTires.Should().Be(18);    //is this redundant?
+                semiTruck.NumberOfTires.Should().Be(18);    
                 semiTruck.Cargo.Should().BeEmpty().And.NotBeNull();    //can I do this or needs to be sep?
 
 
