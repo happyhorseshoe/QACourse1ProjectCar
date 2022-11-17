@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Runtime.CompilerServices;
 
 namespace CodeLouisvilleUnitTestProject
 {
@@ -35,10 +37,10 @@ namespace CodeLouisvilleUnitTestProject
         /// <exception cref="ArgumentException">Thrown if no CargoItem in the Cargo matches the passed name</exception>
         public CargoItem UnloadCargo(string name)
         {
-            var item = Cargo.FirstOrDefault(x => x.Name == name);
+            var item = Cargo.FirstOrDefault(c => c.Name == name);
            
             
-            if (name != null)
+            if (item != null)
             {
                Cargo.Remove(item);
                 return item;
@@ -56,7 +58,7 @@ namespace CodeLouisvilleUnitTestProject
         /// <returns>A List of CargoItems with the exact name passed</returns>
         public List<CargoItem> GetCargoItemsByName(string name)       //not Where b/c empty list needs to return
         {
-            return Cargo.FindAll(x => x.Name == name).ToList();
+            return Cargo.FindAll(c => c.Name == name).ToList();
         }
 
         /// <summary>
@@ -66,14 +68,15 @@ namespace CodeLouisvilleUnitTestProject
         /// <returns>A List of CargoItems with a description containing the passed description</returns>
         public List<CargoItem> GetCargoItemsByPartialDescription(string description)
         {
-            return GetCargoItemsByPartialDescription(description).ToList();
+            //return GetCargoItemsByPartialDescription(description).ToList();//
+            return Cargo.FindAll(c => c.Description.Contains(description));
         }
 
         /// <summary>
         /// Get the number of total items in the Cargo.
         /// </summary>
         /// <returns>An integer representing the sum of all Quantity properties on all CargoItems</returns>
-        public int GetTotalNumberOfItems()         //sums all quantity on each item and all items is this enough? groupby
+        public int GetTotalNumberOfItems()         //sums all quantity on each item and all items is this enough? yes
         {
             return Cargo.Sum(x => x.Quantity);
         }
