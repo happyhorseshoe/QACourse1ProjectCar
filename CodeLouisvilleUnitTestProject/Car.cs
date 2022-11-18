@@ -33,26 +33,31 @@ namespace CodeLouisvilleUnitTestProject
                    string make,
                    string model,
                    double milesPerGallon)
-           
+            :base(4,gasTankCapacity,make,model,milesPerGallon)
         {
-            NumberOfTires = 4;
+
+        }
+           
+        //{
+            //NumberOfTires = 4;
            // GasTankCapacity = gasTankCapacity;
            // MilesPerGallon = milesPerGallon;
            // Make = make;
            // Model = model;
-        }
+        //}
         public async Task<bool> IsValidModelForMakeAsync()
         {
             string urlSuffix = $"vehicles/getmodelsformake/{Make}?format=json";
-            string response = await _client.GetStringAsync(urlSuffix);
-            var data = JsonSerializer.Deserialize<ModelForMakeYearResponse>(response);
+            var response = await _client.GetAsync(urlSuffix);
+            var rawJson = await response.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<ModelForMakeYearResponse>(rawJson);
             return data.Results.Any(r => r.Model_Name == Model);
 
         }
 
         public async Task<bool> WasModelMadeInYearAsync(int year)
         {
-            var model = this.Model;
+            //var model = this.Model;
             if (year < 1995) throw new ArgumentException("No data is available for years before 1995");
             string urlSuffix = $"vehicles/getmodelsformakeyear/make/{Make}/modelyear/{year}?format=json";
             var response = await _client.GetAsync(urlSuffix);
