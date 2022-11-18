@@ -48,7 +48,10 @@ namespace CodeLouisvilleUnitTestProject
             if (year < 1995) throw new ArgumentException("No data is available for years before 1995");
             string urlSuffix = $"/vehicles/getmodelsformakeyear/make/{Make}/modelyear/{year}?format=json";
             var response = await _client.GetAsync(urlSuffix);
-            var content = await response.Content.ReadAsStringAsync();
+            var rawJson = await response.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<ModelForMakeYearResponse>(rawJson);
+            return data.Results.Any(r => r.Model_Name == Model);
+            
         }
 
 
