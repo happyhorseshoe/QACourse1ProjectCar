@@ -145,25 +145,7 @@ namespace CodeLouisvilleUnitTestProjectTests
 
     
 
-    /*using (NewsStyleUriParser AssertionScope())
-    {
-        car.NumberOfPassengers.Should().Be(passengersInside);
-     car.MilesPerGallon.Should().Be(expectedMilesPer);*/
-
-
-
-        /*public void RemovePassengers(int passengers, double milesPer, int removeFrom, int passengersInside, double expectedMilesPer);
-        {
-            Car car = new Car(10, "Honda", "Civic", milesPer);
-        car.AddPassengers(passengers);
-            car.RemovePassengers(removeFrom);
-
-            using (NewsStyleUriParser AssertionScope())
-            {
-                car.NumberOfPassengers.Should().Be(passengersInside);
-        car.MilesPerGallon.Should().Be(expectedMilesPer);
-                }
-        }*/
+   
 
 
 
