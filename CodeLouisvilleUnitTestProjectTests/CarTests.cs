@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,23 +30,39 @@ namespace CodeLouisvilleUnitTestProjectTests
                 car.NumberOfTires.Should().Be(4);
                 car.Should().NotBeNull();
             }
-            public void NewCarIsAVehicleAndHas4Test()
+        }
+        [Fact]
+        public void NewCarIsAVehicleAndHas_4TestParams()
         {
             //arrange
-            Car car = new Car();
-            //act
+            Car car = new Car(10, "Honda", "Civic", 30);
+
 
             //assert
             using (new AssertionScope())
             {
                 car.Should().BeOfType<Car>();
-                car.Should().BeAssignableTo<Vehicle>();
-                car.NumberOfTires.Should().Be(4);    
-                semiTruck.Cargo.Should().BeEmpty().And.NotBeNull();    //can I do this or needs to be sep?
+                car.GasTankCapacity.Should().Be(10);
+                car.Make.Should().Be("Honda");
+                car.Model.Should().Be("Civic");
+                car.NumberOfTires.Should().Be(4);
+                car.Should().NotBeNull();
 
 
             }
 
         }
+        [Theory]
+        [InlineData("Honda", "Civic", true)]
+        [InlineData("Honda", "Camry", false)]      //is there a limit for params in theory?
+
+        public async Task IsValidModelForMakeAsyncCorrect(string make, string model, bool isDefault)
+        {
+            Car car = new Car(10, make, model, 30);
+
+            bool result = await car.IsValidModelForMakeAsync();
+            result.Should().Be(isDefault);                        //isDefault?
+        }
     }
-*/
+}
+    
