@@ -253,6 +253,7 @@ namespace CodeLouisvilleUnitTestProjectTests
                 vehicle.GasLevel.Should().Be("0%");
                 vehicle.MilesRemaining.Should().Be(0);
                 vehicle.Mileage.Should().Be(300);
+                vehicle.HasFlatTire.Should().BeFalse();
             }
         }
 
